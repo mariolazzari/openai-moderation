@@ -1,11 +1,9 @@
-# OpenAI API moderation
+# Baseline example of OpenAI's Moderation API.
+# 
+# - OpenAI Moderation guide: https://platform.openai.com/docs/guides/moderation
+# - OpenAI Moderations API reference: https://platform.openai.com/docs/api-reference/moderations
+# - OpenAI Python library: https://github.com/openai/openai-python
 
-## How moderation works
-
-[Moderation guide](https://platform.openai.com/docs/guides/moderation)
-[Moderations API](https://platform.openai.com/docs/api-reference/moderations)
-
-```py
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -41,4 +39,3 @@ mod = client.moderations.create(input=prompt)
 
 # Print the full response object
 print_response(mod)
-```
