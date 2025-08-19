@@ -1,51 +1,11 @@
-# OpenAI API moderation
+# Using OpenAI's Moderation API to conditionally output prompt response.
+# 
+# - OpenAI Moderation guide: https://platform.openai.com/docs/guides/moderation
+# - OpenAI Moderations API reference: https://platform.openai.com/docs/api-reference/moderations
+# - OpenAI Python library: https://github.com/openai/openai-python
+# - OpenAI Python library documentation: https://www.github.com/openai/openai-python/blob/main/api.md
+# - OpenAI API reference for chat creation: https://platform.openai.com/docs/api-reference/chat/create
 
-## How moderation works
-
-[Moderation guide](https://platform.openai.com/docs/guides/moderation)
-[Moderations API](https://platform.openai.com/docs/api-reference/moderations)
-
-```py
-import os
-from openai import OpenAI
-from dotenv import load_dotenv
-import json
-
-# Load the .env file
-load_dotenv()
-
-# Create a client
-client = OpenAI(
-  api_key=os.getenv("OPENAI_API_KEY"),
-)
-
-# Helper function to pretty print the response object
-def print_response(response_obj):
-    # Serialize the response object
-    def serialize(obj):
-        if hasattr(obj, '__dict__'):
-            return obj.__dict__
-        return str(obj)
-
-    # Create a dictionary
-    response_dict = response_obj.__dict__
-
-    # Print the dictionary
-    print(json.dumps(response_dict, indent=4, default=serialize))
-
-# Create a chat prompt
-prompt = "blond people are boring"
-
-# Run prompt through the moderation API
-mod = client.moderations.create(input=prompt)
-
-# Print the full response object
-print_response(mod)
-```
-
-## Using moderation API
-
-```py
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -103,6 +63,7 @@ prompt = "blond people are nice"
 # Run prompt through the moderation API
 mod = client.moderations.create(input=prompt)
 
+
 # Act on response
 if mod.results[0].flagged == True:
     print("Flagged")
@@ -112,5 +73,3 @@ else:
     print("Not flagged")
     # Create a chat completion
     api_request(0.9, "You are a curious conversational partner. Provide a short answer with an observation.", prompt)
-´´´
-
